@@ -12,9 +12,9 @@
 
 #include "../numerical/MatrixInverse-mod.h"
 
-vector<pii> generalMatching(int N, vector<pii>& ed) {
+vector<ii> generalMatching(int N, vector<pii>& ed) {
 	vector<vector<ll>> mat(N, vector<ll>(N)), A;
-	for (pii pa : ed) {
+	for (ii pa : ed) {
 		int a = pa.first, b = pa.second, r = rand() % mod;
 		mat[a][b] = r, mat[b][a] = (mod - r) % mod;
 	}
@@ -33,7 +33,7 @@ vector<pii> generalMatching(int N, vector<pii>& ed) {
 		}
 	} while (matInv(A = mat) != M);
 
-	vi has(M, 1); vector<pii> ret;
+	vi has(M, 1); vector<ii> ret;
 	rep(it,0,M/2) {
 		rep(i,0,M) if (has[i])
 			rep(j,i+1,M) if (A[i][j] && mat[i][j]) {

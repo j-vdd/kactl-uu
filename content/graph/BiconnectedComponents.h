@@ -20,7 +20,7 @@
 #pragma once
 
 vi num, st;
-vector<vector<pii>> ed;
+vector<vector<ii>> ed;
 int Time;
 template<class F>
 int dfs(int at, int par, F& f) {
