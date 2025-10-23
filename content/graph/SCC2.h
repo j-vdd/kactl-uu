@@ -3,9 +3,11 @@
  * Date: 2025-09-07
  * License: CC0
  * Source: https://cp-algorithms.com/graph/strongly-connected-components.html
- * Description: Finds all biconnected components in an undirected graph, returns the components and
- * a new graph formed by them. Usage: vvi adj2; vvi components = stronglyConnected(adj, adj2); Time:
- * O(E + V) Status: tested by upsolve F from BAPC 2025
+ * Description: Finds all strongly connected components in an undirected graph, returns the components and
+ * a new graph formed by them. 
+ * Usage: vvi adj2; vvi components = stronglyConnected(adj, adj2); 
+ * Time: O(E + V) 
+ * Status: tested by upsolve F from BAPC 2025
  */
 #pragma once
 
