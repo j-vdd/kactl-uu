@@ -3,22 +3,22 @@
  * Date: 2020-10-23
  * License: CC0
  * Source: me
- * Description: Segment tree with ability to add or set values of large intervals, and compute max of intervals.
+ * Description: Segment tree with ability to set values of intervals, and compute sums of intervals.
  * Can be changed to other things.
  * Time: O(\log N).
  * Usage: Segtree tree(n, v);
- * Status: stress-tested a bit
+ * Status: stress-tested a bit with max queries + range set and add queries + range set
  */
 #pragma once
 
 struct SegTree {
     typedef int T;
-    const T id = INT_MAX;
+    const T id = 0;
     const T lzId = INT_MIN;
     T merge(T a, T b) {
-        return max(a, b);
+        return a + b;
     }
-    void lzUpdate(T& a, T lz, int sz) {
+    void mergelz(T& a, T lz, int sz) {
         if (lz != lzId)
             a = lz * sz;
     }
@@ -29,23 +29,23 @@ struct SegTree {
         while (N < n) N *= 2;
 
         t.resize(2 * N), lz.resize(2 * N, lzId);
-        loop(i, n)
+        for (int i = 0; i < n; i++)
             t[N + i] = values[i];
         for (int i = N - 1; i >= 1; i--)
             t[i] = merge(t[2 * i], t[2 * i + 1]);
     }
     void push(int i, int sz) {
-        lzUpdate(t[2 * i], lz[i], sz);
-        lzUpdate(t[2 * i + 1], lz[i], sz);
-        lzUpdate(lz[2 * i], lz[i], 1);
-        lzUpdate(lz[2 * i + 1], lz[i], 1);
+        mergelz(t[2 * i], lz[i], sz);
+        mergelz(t[2 * i + 1], lz[i], sz);
+        mergelz(lz[2 * i], lz[i], 1);
+        mergelz(lz[2 * i + 1], lz[i], 1);
         lz[i] = lzId;
     }
     void update(int l, int r, T v, int i = 1, int tl = 0, int tr = -1) {
         if (tr == -1) tr = N;
         if (l >= tr || r <= tl) return;
         if (tl >= l && tr <= r)
-            lzUpdate(lz[i], v, 1), lzUpdate(t[i], v, tr - tl);
+            mergelz(lz[i], v, 1), mergelz(t[i], v, tr - tl);
         else {
             int tm = (tl + tr) / 2;
             push(i, tm - tl);
